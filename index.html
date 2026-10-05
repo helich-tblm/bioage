@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор биологического возраста</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      max-width: 480px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      line-height: 1.5;
+    }
+    h1 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+    .subtitle { color: #666; margin-bottom: 2rem; }
+    .form-group { margin-bottom: 1rem; }
+    label { display: block; margin-bottom: 0.3rem; font-weight: 500; }
+    input[type="number"], select {
+      width: 100%;
+      padding: 0.7rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+    }
+    input[type="number"]:focus, select:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    button {
+      width: 100%;
+      padding: 0.9rem;
+      background: #2563eb;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 0.5rem;
+    }
+    button:hover { background: #1d4ed8; }
+    button:active { background: #1e40af; }
+    .result {
+      margin-top: 1.5rem;
+      padding: 1.5rem;
+      background: #f0f9ff;
+      border: 1px solid #bae6fd;
+      border-radius: 8px;
+      text-align: center;
+      display: none;
+    }
+    .result.show { display: block; }
+    .result-label { font-size: 0.9rem; color: #0369a1; margin-bottom: 0.3rem; }
+    .result-value { font-size: 2.5rem; font-weight: 700; color: #0c4a6e; }
+    .error { color: #dc2626; font-size: 0.85rem; margin-top: 0.3rem; display: none; }
+    .error.show { display: block; }
+    .hint { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
+  </style>
+</head>
+<body>
+  <h1>Биологический возраст</h1>
+  <p class="subtitle">Заполните показатели и нажмите «Вычислить»</p>
+
+  <form id="calcForm" novalidate>
+    <div class="form-group">
+      <label for="gender">Пол</label>
+      <select id="gender" required>
+        <option value="">Выберите…</option>
+        <option value="male">Мужчина</option>
+        <option value="female">Женщина</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="sysBP">АД сист. (мм рт. ст.)</label>
+        <input type="number" id="sysBP" step="1" min="50" max="250" required placeholder="120">
+      </div>
+      <div class="form-group">
+        <label for="diaBP">АДП (мм рт. ст.)</label>
+        <input type="number" id="diaBP" step="1" min="30" max="150" required placeholder="80">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="form-group">
+        <label for="hr">ЗДВ (уд/мин)</label>
+        <input type="number" id="hr" step="1" min="30" max="200" required placeholder="70">
+      </div>
+      <div class="form-group">
+        <label for="mt">МТ (мм)</label>
+        <input type="number" id="mt" step="0.1" min="0" max="50" required placeholder="10.5">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="sb">СБ (ммоль/л)</label>
+      <input type="number" id="sb" step="0.1" min="2" max="20" required placeholder="5.2">
+    </div>
+
+    <fieldset class="form-group" style="border:1px solid #e5e7eb;border-radius:6px;padding:1rem;">
+      <legend style="font-weight:500;padding:0 0.5rem;">СОЗ (баллы)</legend>
+      <div class="row">
+        <div class="form-group">
+          <label for="soz1">СОЗ 1</label>
+          <input type="number" id="soz1" step="1" min="0" max="10" required placeholder="2">
+        </div>
+        <div class="form-group">
+          <label for="soz2">СОЗ 2</label>
+          <input type="number" id="soz2" step="1" min="0" max="10" required placeholder="1">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="soz3">СОЗ 3</label>
+        <input type="number" id="soz3" step="1" min="0" max="10" required placeholder="0">
+      </div>
+      <p class="hint">СОЗ = СОЗ 1 + СОЗ 2 + СОЗ 3 (суммируется автоматически)</p>
+    </fieldset>
+
+    <button type="submit">Вычислить</button>
+
+    <div class="error" id="errorMsg"></div>
+  </form>
+
+  <div class="result" id="resultBox">
+    <div class="result-label">Ваш биологический возраст</div>
+    <div class="result-value" id="resultValue">—</div>
+    <div class="hint" style="margin-top:0.5rem;">Формула: <span id="formulaUsed"></span></div>
+  </div>
+
+  <script>
+    const form = document.getElementById('calcForm');
+    const resultBox = document.getElementById('resultBox');
+    const resultValue = document.getElementById('resultValue');
+    const formulaUsed = document.getElementById('formulaUsed');
+    const errorMsg = document.getElementById('errorMsg');
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      errorMsg.classList.remove('show');
+      resultBox.classList.remove('show');
+
+      const gender = document.getElementById('gender').value;
+      const sysBP = parseFloat(document.getElementById('sysBP').value);
+      const diaBP = parseFloat(document.getElementById('diaBP').value);
+      const hr = parseFloat(document.getElementById('hr').value);
+      const mt = parseFloat(document.getElementById('mt').value);
+      const sb = parseFloat(document.getElementById('sb').value);
+      const soz1 = parseFloat(document.getElementById('soz1').value);
+      const soz2 = parseFloat(document.getElementById('soz2').value);
+      const soz3 = parseFloat(document.getElementById('soz3').value);
+
+      // Валидация
+      const inputs = { sysBP, diaBP, hr, mt, sb, soz1, soz2, soz3 };
+      for (const [name, val] of Object.entries(inputs)) {
+        if (isNaN(val)) {
+          showError(`Заполните поле "${name}"`);
+          return;
+        }
+      }
+      if (!gender) {
+        showError('Выберите пол');
+        return;
+      }
+
+      const soz = soz1 + soz2 + soz3;
+      let bioAge, formula;
+
+      if (gender === 'male') {
+        bioAge = 26.985 + 0.215 * sysBP - 0.149 * hr - 0.151 * sb + 0.723 * soz;
+        formula = 'Мужчины: 26,985 + 0,215×АДС - 0,149×ЗДВ - 0,151×СБ + 0,723×СОЗ';
+      } else {
+        bioAge = -1.463 + 0.415 * diaBP - 0.141 * sb + 0.248 * mt + 0.694 * soz;
+        formula = 'Женщины: -1,463 + 0,415×АДП - 0,141×СБ + 0,248×МТ + 0,694×СОЗ';
+      }
+
+      resultValue.textContent = Math.round(bioAge * 10) / 10;
+      formulaUsed.textContent = formula;
+      resultBox.classList.add('show');
+      resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    });
+
+    function showError(msg) {
+      errorMsg.textContent = msg;
+      errorMsg.classList.add('show');
+      errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+  </script>
+</body>
+</html>
