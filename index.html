@@ -59,6 +59,40 @@
     .error { color: #dc2626; font-size: 0.85rem; margin-top: 0.3rem; display: none; }
     .error.show { display: block; }
     .hint { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
+    .hint { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
+
+/* ===== СОЗ ===== */
+.soz-block {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px dashed #e5e7eb;
+}
+.soz-block:last-of-type {
+  border-bottom: none;
+}
+.soz-block-title {
+  font-weight: 700;
+  color: #2563eb;
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+}
+.soz-questions {
+  margin: 0 0 0.8rem 1.4rem;
+  padding: 0;
+  font-size: 0.9rem;
+  color: #334155;
+  line-height: 1.45;
+}
+.soz-questions li {
+  margin-bottom: 0.35rem;
+}
+.soz-block input[type="number"] {
+  max-width: 120px;
+}
+.soz-block label {
+  font-size: 0.85rem;
+  color: #475569;
+}
   </style>
 </head>
 <body>
@@ -103,23 +137,78 @@
     </div>
 
     <fieldset class="form-group" style="border:1px solid #e5e7eb;border-radius:6px;padding:1rem;">
-      <legend style="font-weight:500;padding:0 0.5rem;">СОЗ (баллы)</legend>
-      <div class="row">
-        <div class="form-group">
-          <label for="soz1">СОЗ 1</label>
-          <input type="number" id="soz1" step="1" min="0" max="10" required placeholder="2">
-        </div>
-        <div class="form-group">
-          <label for="soz2">СОЗ 2</label>
-          <input type="number" id="soz2" step="1" min="0" max="10" required placeholder="1">
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="soz3">СОЗ 3</label>
-        <input type="number" id="soz3" step="1" min="0" max="10" required placeholder="0">
-      </div>
-      <p class="hint">СОЗ = СОЗ 1 + СОЗ 2 + СОЗ 3 (суммируется автоматически)</p>
-    </fieldset>
+  <legend style="font-weight:500;padding:0 0.5rem;">Субъективная оценка здоровья (СОЗ)</legend>
+
+  <p class="hint" style="margin-bottom:1rem;">
+    Отметьте утверждения, с которыми вы <strong>согласны</strong>.
+    Каждое согласие — неблагоприятный ответ. Затем укажите число
+    отмеченных утверждений в каждом блоке.
+  </p>
+
+  <!-- ===== Блок 1: утверждения 1–10 ===== -->
+  <div class="soz-block">
+    <p class="soz-block-title">Утверждения 1–10 (самочувствие)</p>
+    <ol class="soz-questions">
+      <li>Меня беспокоят головные боли.</li>
+      <li>Я легко просыпаюсь от любого шума.</li>
+      <li>Меня беспокоят боли в области сердца.</li>
+      <li>В последние годы у меня ухудшилось зрение.</li>
+      <li>В последние годы у меня ухудшился слух.</li>
+      <li>Я стараюсь пить только кипячёную воду.</li>
+      <li>Мне уступают место в городском транспорте.</li>
+      <li>Меня беспокоят боли в суставах.</li>
+      <li>Я избегаю поездок на пляж / к морю.</li>
+      <li>На моё самочувствие влияет перемена погоды.</li>
+    </ol>
+    <div class="form-group">
+      <label for="soz1">Отмечено утверждений 1–10 (из 10):</label>
+      <input type="number" id="soz1" step="1" min="0" max="10" required placeholder="0">
+    </div>
+  </div>
+
+  <!-- ===== Блок 2: утверждения 11–19 ===== -->
+  <div class="soz-block">
+    <p class="soz-block-title">Утверждения 11–19 (сон, память, настроение)</p>
+    <ol class="soz-questions" start="11">
+      <li>Из-за волнения я теряю сон.</li>
+      <li>Меня беспокоят запоры.</li>
+      <li>Я стал(а) менее работоспособным(ой), чем прежде.</li>
+      <li>Меня беспокоят боли в области печени.</li>
+      <li>У меня бывают головокружения.</li>
+      <li>Сосредоточиться сейчас мне труднее, чем раньше.</li>
+      <li>Меня беспокоит ослабление памяти, забывчивость.</li>
+      <li>Я ощущаю в разных частях тела жжение, покалывание, «ползание мурашек».</li>
+      <li>У меня бывают периоды, когда я не чувствую радости или удовольствия.</li>
+    </ol>
+    <div class="form-group">
+      <label for="soz2">Отмечено утверждений 11–19 (из 9):</label>
+      <input type="number" id="soz2" step="1" min="0" max="9" required placeholder="0">
+    </div>
+  </div>
+
+  <!-- ===== Блок 3: утверждения 20–29 ===== -->
+  <div class="soz-block">
+    <p class="soz-block-title">Утверждения 20–29 (сердце, отёки, одышка, общее здоровье)</p>
+    <ol class="soz-questions" start="20">
+      <li>Меня беспокоят звон или шум в ушах.</li>
+      <li>Я держу для себя в домашней аптечке валидол, нитроглицерин или сердечные капли.</li>
+      <li>У меня бывают отёки на ногах.</li>
+      <li>Мне приходится отказываться от некоторых блюд.</li>
+      <li>У меня бывает одышка при быстрой ходьбе.</li>
+      <li>Меня беспокоят боли в области поясницы.</li>
+      <li>Мне приходится в лечебных целях принимать минеральную воду.</li>
+      <li>Меня беспокоит неприятный вкус во рту.</li>
+      <li>Я стал(а) легко плакать.</li>
+      <li>Я имею постоянные проблемы со здоровьем / никогда не чувствую себя здоровым(ой).</li>
+    </ol>
+    <div class="form-group">
+      <label for="soz3">Отмечено утверждений 20–29 (из 10):</label>
+      <input type="number" id="soz3" step="1" min="0" max="10" required placeholder="0">
+    </div>
+  </div>
+
+  <p class="hint">СОЗ = СОЗ 1 + СОЗ 2 + СОЗ 3 (суммируется автоматически)</p>
+</fieldset>
 
     <button type="submit">Вычислить</button>
 
