@@ -60,7 +60,6 @@
     .error.show { display: block; }
     .hint { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
     .hint { font-size: 0.8rem; color: #666; margin-top: 0.2rem; }
-
 /* ===== СОЗ ===== */
 .soz-block {
   margin-bottom: 1.5rem;
@@ -76,22 +75,48 @@
   margin: 0 0 0.5rem;
   font-size: 0.95rem;
 }
+
+/* Список чекбоксов */
 .soz-questions {
-  margin: 0 0 0.8rem 1.4rem;
+  list-style: none;
+  margin: 0 0 0.8rem;
   padding: 0;
   font-size: 0.9rem;
   color: #334155;
   line-height: 1.45;
 }
 .soz-questions li {
-  margin-bottom: 0.35rem;
+  margin-bottom: 0.4rem;
 }
-.soz-block input[type="number"] {
-  max-width: 120px;
+.soz-questions label {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 400;
+  color: #334155;
 }
-.soz-block label {
+.soz-questions input[type="checkbox"] {
+  margin-top: 0.2rem;
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: #2563eb;
+}
+.soz-questions label:hover {
+  color: #0c4a6e;
+}
+
+/* Счётчик "Отмечено: N из M" */
+.soz-counter {
+  margin: 0;
   font-size: 0.85rem;
   color: #475569;
+}
+.soz-counter strong {
+  color: #2563eb;
+  font-size: 1rem;
 }
   </style>
 </head>
@@ -135,81 +160,73 @@
       <label for="sb">Статическая балансировка с закрытыми глазами на одной ноге (сек)</label>
       <input type="number" id="sb" step="any" min="2" max="60" required placeholder="40">
     </div>
-
-    <fieldset class="form-group" style="border:1px solid #e5e7eb;border-radius:6px;padding:1rem;">
+<fieldset class="form-group" style="border:1px solid #e5e7eb;border-radius:6px;padding:1rem;">
   <legend style="font-weight:500;padding:0 0.5rem;">Субъективная оценка здоровья (СОЗ)</legend>
 
   <p class="hint" style="margin-bottom:1rem;">
     Отметьте утверждения, с которыми вы <strong>согласны</strong>.
-    Каждое согласие — неблагоприятный ответ. Затем укажите число
-    отмеченных утверждений в каждом блоке.
+    Каждое согласие — неблагоприятный ответ.
   </p>
 
   <!-- ===== Блок 1: утверждения 1–10 ===== -->
-  <div class="soz-block">
+  <div class="soz-block" data-block="1">
     <p class="soz-block-title">Утверждения 1–10 (самочувствие)</p>
-    <ol class="soz-questions">
-      <li>Меня беспокоят головные боли.</li>
-      <li>Я легко просыпаюсь от любого шума.</li>
-      <li>Меня беспокоят боли в области сердца.</li>
-      <li>В последние годы у меня ухудшилось зрение.</li>
-      <li>В последние годы у меня ухудшился слух.</li>
-      <li>Я стараюсь пить только кипячёную воду.</li>
-      <li>Мне уступают место в городском транспорте.</li>
-      <li>Меня беспокоят боли в суставах.</li>
-      <li>Я избегаю поездок на пляж / к морю.</li>
-      <li>На моё самочувствие влияет перемена погоды.</li>
-    </ol>
-    <div class="form-group">
-      <label for="soz1">Отмечено утверждений 1–10 (из 10):</label>
-      <input type="number" id="soz1" step="1" min="0" max="10" required placeholder="0">
-    </div>
+    <ul class="soz-questions">
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят головные боли.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я легко просыпаюсь от любого шума.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят боли в области сердца.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> В последние годы у меня ухудшилось зрение.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> В последние годы у меня ухудшился слух.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я стараюсь пить только кипячёную воду.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Мне уступают место в городском транспорте.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят боли в суставах.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я избегаю поездок на пляж / к морю.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> На моё самочувствие влияет перемена погоды.</label></li>
+    </ul>
+    <p class="soz-counter">Отмечено: <strong class="soz-count">0</strong> из 10</p>
+    <input type="hidden" id="soz1" value="0">
   </div>
 
   <!-- ===== Блок 2: утверждения 11–19 ===== -->
-  <div class="soz-block">
+  <div class="soz-block" data-block="2">
     <p class="soz-block-title">Утверждения 11–19 (сон, память, настроение)</p>
-    <ol class="soz-questions" start="11">
-      <li>Из-за волнения я теряю сон.</li>
-      <li>Меня беспокоят запоры.</li>
-      <li>Я стал(а) менее работоспособным(ой), чем прежде.</li>
-      <li>Меня беспокоят боли в области печени.</li>
-      <li>У меня бывают головокружения.</li>
-      <li>Сосредоточиться сейчас мне труднее, чем раньше.</li>
-      <li>Меня беспокоит ослабление памяти, забывчивость.</li>
-      <li>Я ощущаю в разных частях тела жжение, покалывание, «ползание мурашек».</li>
-      <li>У меня бывают периоды, когда я не чувствую радости или удовольствия.</li>
-    </ol>
-    <div class="form-group">
-      <label for="soz2">Отмечено утверждений 11–19 (из 9):</label>
-      <input type="number" id="soz2" step="1" min="0" max="9" required placeholder="0">
-    </div>
+    <ul class="soz-questions">
+      <li><label><input type="checkbox" class="soz-check"> Из-за волнения я теряю сон.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят запоры.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я стал(а) менее работоспособным(ой), чем прежде.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят боли в области печени.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> У меня бывают головокружения.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Сосредоточиться сейчас мне труднее, чем раньше.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоит ослабление памяти, забывчивость.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я ощущаю в разных частях тела жжение, покалывание, «ползание мурашек».</label></li>
+      <li><label><input type="checkbox" class="soz-check"> У меня бывают периоды, когда я не чувствую радости или удовольствия.</label></li>
+    </ul>
+    <p class="soz-counter">Отмечено: <strong class="soz-count">0</strong> из 9</p>
+    <input type="hidden" id="soz2" value="0">
   </div>
 
   <!-- ===== Блок 3: утверждения 20–29 ===== -->
-  <div class="soz-block">
+  <div class="soz-block" data-block="3">
     <p class="soz-block-title">Утверждения 20–29 (сердце, отёки, одышка, общее здоровье)</p>
-    <ol class="soz-questions" start="20">
-      <li>Меня беспокоят звон или шум в ушах.</li>
-      <li>Я держу для себя в домашней аптечке валидол, нитроглицерин или сердечные капли.</li>
-      <li>У меня бывают отёки на ногах.</li>
-      <li>Мне приходится отказываться от некоторых блюд.</li>
-      <li>У меня бывает одышка при быстрой ходьбе.</li>
-      <li>Меня беспокоят боли в области поясницы.</li>
-      <li>Мне приходится в лечебных целях принимать минеральную воду.</li>
-      <li>Меня беспокоит неприятный вкус во рту.</li>
-      <li>Я стал(а) легко плакать.</li>
-      <li>Я имею постоянные проблемы со здоровьем / никогда не чувствую себя здоровым(ой).</li>
-    </ol>
-    <div class="form-group">
-      <label for="soz3">Отмечено утверждений 20–29 (из 10):</label>
-      <input type="number" id="soz3" step="1" min="0" max="10" required placeholder="0">
-    </div>
+    <ul class="soz-questions">
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят звон или шум в ушах.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я держу для себя в домашней аптечке валидол, нитроглицерин или сердечные капли.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> У меня бывают отёки на ногах.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Мне приходится отказываться от некоторых блюд.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> У меня бывает одышка при быстрой ходьбе.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоят боли в области поясницы.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Мне приходится в лечебных целях принимать минеральную воду.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Меня беспокоит неприятный вкус во рту.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я стал(а) легко плакать.</label></li>
+      <li><label><input type="checkbox" class="soz-check"> Я имею постоянные проблемы со здоровьем / никогда не чувствую себя здоровым(ой).</label></li>
+    </ul>
+    <p class="soz-counter">Отмечено: <strong class="soz-count">0</strong> из 10</p>
+    <input type="hidden" id="soz3" value="0">
   </div>
 
   <p class="hint">СОЗ = СОЗ 1 + СОЗ 2 + СОЗ 3 (суммируется автоматически)</p>
 </fieldset>
-
+    
     <button type="submit">Вычислить</button>
 
     <div class="error" id="errorMsg"></div>
@@ -279,6 +296,22 @@
       errorMsg.classList.add('show');
       errorMsg.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
+// ===== Подсчёт чекбоксов СОЗ =====
+document.querySelectorAll('.soz-block').forEach(block => {
+  const blockNum = block.dataset.block;               // "1", "2", "3"
+  const checks = block.querySelectorAll('.soz-check');
+  const counter = block.querySelector('.soz-count');
+  const hidden = document.getElementById('soz' + blockNum);
+
+  function updateCount() {
+    const count = block.querySelectorAll('.soz-check:checked').length;
+    counter.textContent = count;
+    hidden.value = count;
+  }
+
+  checks.forEach(cb => cb.addEventListener('change', updateCount));
+  updateCount(); // на случай если браузер восстановит отмеченные
+});
   </script>
 </body>
 </html>
