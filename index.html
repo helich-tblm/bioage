@@ -176,7 +176,7 @@
       } else {
         const adp = sysBP - diaBP;
         bioAge = -1.463 + 0.415 * adp - 0.141 * sb + 0.248 * mt + 0.694 * soz;
-        formula = 'Женщины: -1,463 + 0,415×АДП (${adp}) - 0,141×СБ + 0,248×МТ + 0,694×СОЗ';
+        formula = `Женщины: -1,463 + 0,415×АДП (${adp}) - 0,141×СБ + 0,248×МТ + 0,694×СОЗ`;
       }
 
       resultValue.textContent = Math.round(bioAge * 10) / 10;
