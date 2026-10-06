@@ -121,8 +121,8 @@
   </style>
 </head>
 <body>
-  <h1>&#129516 Калькулятор биологического возраста</h1>
-  <p class="subtitle">С измерениями поможет староста кружка :)</p>
+  <h1>&#129516 Калькулятор биологического возраста от СНК Эндокринология и внутренние болезни</h1>
+  <p class="subtitle">Опережаешь паспортный - задумайся..</p>
 
   <form id="calcForm" novalidate>
     <div class="form-group">
@@ -165,12 +165,11 @@
 
   <p class="hint" style="margin-bottom:1rem;">
     Отметьте утверждения, с которыми вы <strong>согласны</strong>.
-    Каждое согласие — неблагоприятный ответ.
   </p>
 
   <!-- ===== Блок 1: утверждения 1–10 ===== -->
   <div class="soz-block" data-block="1">
-    <p class="soz-block-title">Утверждения 1–10 (самочувствие)</p>
+    <p class="soz-block-title">Утверждения 1–10 (общее)</p>
     <ul class="soz-questions">
       <li><label><input type="checkbox" class="soz-check"> Меня беспокоят головные боли.</label></li>
       <li><label><input type="checkbox" class="soz-check"> Я легко просыпаюсь от любого шума.</label></li>
@@ -189,7 +188,7 @@
 
   <!-- ===== Блок 2: утверждения 11–19 ===== -->
   <div class="soz-block" data-block="2">
-    <p class="soz-block-title">Утверждения 11–19 (сон, память, настроение)</p>
+    <p class="soz-block-title">Утверждения 11–19 (нервная система)</p>
     <ul class="soz-questions">
       <li><label><input type="checkbox" class="soz-check"> Из-за волнения я теряю сон.</label></li>
       <li><label><input type="checkbox" class="soz-check"> Меня беспокоят запоры.</label></li>
@@ -207,7 +206,7 @@
 
   <!-- ===== Блок 3: утверждения 20–29 ===== -->
   <div class="soz-block" data-block="3">
-    <p class="soz-block-title">Утверждения 20–29 (сердце, отёки, одышка, общее здоровье)</p>
+    <p class="soz-block-title">Утверждения 20–29 (кардиореспираторный статус)</p>
     <ul class="soz-questions">
       <li><label><input type="checkbox" class="soz-check"> Меня беспокоят звон или шум в ушах.</label></li>
       <li><label><input type="checkbox" class="soz-check"> Я держу для себя в домашней аптечке валидол, нитроглицерин или сердечные капли.</label></li>
@@ -224,7 +223,7 @@
     <input type="hidden" id="soz3" value="0">
   </div>
 
-  <p class="hint">СОЗ = СОЗ 1 + СОЗ 2 + СОЗ 3 (суммируется автоматически)</p>
+  <p class="hint">Быстрый скрининг большого спектра нозологий</p>
 </fieldset>
     
     <button type="submit">Вычислить</button>
@@ -285,7 +284,7 @@
         formula = `Женщины: -1,463 + 0,415×АДП (${adp}) - 0,141×СБ + 0,248×МТ + 0,694×СОЗ`;
       }
 
-      resultValue.textContent = Math.round(bioAge * 10) / 10;
+      resultValue.textContent = Math.round(bioAge);
       formulaUsed.textContent = formula;
       resultBox.classList.add('show');
       resultBox.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
