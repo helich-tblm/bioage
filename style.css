@@ -52,7 +52,7 @@ h2 { margin-bottom: 0; font-size: clamp(42px, 6vw, 76px); }
 
 /* БЛОК 2 — ПЕРВЫЙ ЭКРАН */
 .hero { position: relative; min-height: min(720px, calc(100vh - 82px)); display: flex; align-items: center; overflow: hidden; }
-.hero-image { position: absolute; inset: 0; background: linear-gradient(110deg, #3a4640, #202724 58%, #667063); background-image: url("images/hero.jpg"); background-size: cover; background-position: center 38%; transform: scale(1.01); }
+.hero-image { position: absolute; inset: 0; background: linear-gradient(110deg, #3a4640, #202724 58%, #667063); background-image: url("images/cat.jpg"); background-size: cover; background-position: center 38%; transform: scale(1.01); }
 .hero-shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(12,17,15,.86) 0%, rgba(12,17,15,.62) 48%, rgba(12,17,15,.12) 100%), linear-gradient(0deg, rgba(12,17,15,.34), transparent 55%); }
 .hero-content { position: relative; z-index: 1; padding-top: 45px; padding-bottom: 80px; }
 .hero h1 { max-width: 850px; margin-bottom: 26px; font-size: clamp(58px, 9.5vw, 116px); }
