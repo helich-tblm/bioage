@@ -26,3 +26,49 @@ faqItems.forEach((item) => {
     });
   });
 });
+
+
+
+const modal = document.getElementById("course-modal");
+const form = document.getElementById("course-form");
+
+if (modal) {
+  const openButtons = document.querySelectorAll(".js-open-form");
+  const closeButtons = modal.querySelectorAll(".js-close-form");
+
+  function openModal() {
+    modal.classList.add("is-open");
+    modal.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    modal.querySelector(".modal-close").focus();
+  }
+
+  function closeModal() {
+    modal.classList.remove("is-open");
+    modal.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+  }
+
+  openButtons.forEach(button => {
+    button.addEventListener("click", openModal);
+  });
+
+  closeButtons.forEach(button => {
+    button.addEventListener("click", closeModal);
+  });
+
+  document.addEventListener("keydown", event => {
+    if (event.key === "Escape" && modal.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+}
+
+// Демонстрационная отправка
+if (form) {
+  form.addEventListener("submit", event => {
+    event.preventDefault();
+    alert("Анкета заполнена! Отправку подключим отдельно.");
+  });
+}
+
