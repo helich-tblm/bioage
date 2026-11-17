@@ -326,3 +326,11 @@ body.modal-open { overflow: hidden; }
 #awards .award-card strong{font-size:clamp(34px,3.5vw,48px);position:relative;z-index:1}
 @media(max-width:900px){#international .international-top,#international .international-bottom{grid-template-columns:1fr}#international .international-benefits{grid-template-columns:1fr}#international .international-benefit-wide{grid-column:auto}}
 @media(max-width:680px){#international .international-top{margin-bottom:44px}#international .international-heading{margin-bottom:32px}#international .international-payment,#international .international-countries{min-height:230px;padding:25px}#international .international-payment strong{font-size:clamp(38px,10vw,60px)}#international .international-subheading{display:block}#international .international-subheading p{margin-top:10px}#international .international-benefits{margin-bottom:44px}#international .international-benefit{min-height:115px;padding:23px 75px 23px 22px}#international .international-benefit p{font-size:14px}#international .international-symbol{font-size:52px}#international .international-citizenship,#international .international-documents{padding:26px;min-height:260px}}
+.documents-image {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    height: auto;
+    margin-top: 35px;
+    object-fit: contain;
+}
