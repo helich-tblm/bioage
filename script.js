@@ -62,10 +62,43 @@ if (modal) {
     });
 }
 
-// Демонстрационная отправка
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxcMKrpqo5UVFglnXeVT8mluCjSUy0vOLAODPgKIKyX7d4o-tW86ALFQYbwt7JZxLgaqA/exec";
+
 if (form) {
-    form.addEventListener("submit", event => {
+    const submitButton = form.querySelector(".form-submit");
+    const status = document.getElementById("form-success");
+
+    form.addEventListener("submit", async (event) => {
         event.preventDefault();
-        alert("Анкета заполнена! Отправку подключим отдельно.");
+
+        if (!form.reportValidity()) return;
+
+        submitButton.disabled = true;
+        submitButton.textContent = "Отправляем...";
+        status.hidden = true;
+
+        try {
+            await fetch(SCRIPT_URL, {
+                method: "POST",
+                mode: "no-cors",
+                body: new FormData(form)
+            });
+
+            status.textContent =
+                "Запрос отправлен. Подтверждение приёма заявки ожидается.";
+            status.hidden = false;
+
+            // Не очищаем форму: сервер не подтвердил запись.
+        } catch (error) {
+            status.textContent =
+                "Не удалось отправить заявку. Попробуйте ещё раз.";
+            status.hidden = false;
+        } finally {
+            submitButton.disabled = false;
+            submitButton.innerHTML =
+                'Отправить заявку <span>→</span>';
+        }
     });
 }
+
+
