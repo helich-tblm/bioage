@@ -101,7 +101,7 @@ h2 { margin-bottom: 0; font-size: clamp(42px, 6vw, 76px); }
 .documents-layout { display: grid; grid-template-columns: .9fr 1.1fr; gap: 90px; align-items: start; }
 .documents-layout h2 { margin-bottom: 22px; }
 .document-list { border-top: 1px solid var(--line-dark); }
-.document-row { min-height: 72px; display: flex; align-items: center; justify-content: space-between; gap: 20px; border-bottom: 1px solid var(--line-dark); font-size: 11px; font-weight: 800; letter-spacing: .04em; }
+.document-row { max-width:500px; min-height: 72px; display: flex; align-items: center; justify-content: center; gap: 18px; border-bottom: 1px solid var(--line-dark); font-size: 20px; font-weight: 800; letter-spacing: .04em; }
 .document-row b { color: var(--accent-dark); font-size: 18px; }
 
 /* БЛОК 11 — FAQ */
